@@ -5,46 +5,35 @@ import { setEntries, next, vote } from '../src/core'
 
 describe('application logic', () => {
   describe('vote', () => {
+
     it('creates a tally for the voted entry', () => {
       const state = Map({
-        vote: Map({
-          pair: List.of('Batman', 'Superman')
-        }),
-        entries: List()
+        pair: List.of('Batman', 'Superman')
       })
       const nextState = vote(state, 'Batman')
       expect(nextState).to.equal(Map({
-        vote: Map({
-          pair: List.of('Batman', 'Superman'),
-          tally: Map({
-            'Batman': 1
-          })
-        }),
-        entries: List()
+        pair: List.of('Batman', 'Superman'),
+        tally: Map({
+          'Batman': 1
+        })
       }))
     })
 
     it('adds to existing tally for the voted entry', () => {
       const state = Map({
-        vote: Map({
-          pair: List.of('Batman', 'Superman'),
-          tally: Map({
-            'Batman': 3,
-            'Superman': 2
-          })
-        }),
-        entries: List()
+        pair: List.of('Batman', 'Superman'),
+        tally: Map({
+          'Batman': 3,
+          'Superman': 2
+        })
       })
       const nextState = vote(state, 'Batman')
       expect(nextState).to.equal(Map({
-        vote: Map({
-          pair: List.of('Batman', 'Superman'),
-          tally: Map({
-            'Batman': 4,
-            'Superman': 2
-          })
-        }),
-        entries: List()
+        pair: List.of('Batman', 'Superman'),
+        tally: Map({
+          'Batman': 4,
+          'Superman': 2
+        })
       }))
     })
 
