@@ -2,6 +2,10 @@ import React from 'react'
 
 export default class App extends React.Component{
   render(){
-    return <div>{this.props.children}</div>
+    return <div>
+      <h1>Redux Voter</h1>
+      <hr/>
+      {this.props.children}
+    </div>
   }
 }
