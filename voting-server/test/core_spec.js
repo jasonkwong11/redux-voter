@@ -1,23 +1,77 @@
 import { List, Map } from 'immutable'
 import { expect } from 'chai'
 
-import { setEntries, next, vote } from '../src/core'
+import { setEntries, next, vote, restart } from '../src/core'
 
 describe('application logic', () => {
+  describe('restart', () => {
+    it('returns to initial entries and takes the first two entries under vote', () => {
+      expect(
+        restart(Map({
+          vote: Map({
+            round: 1,
+            pair: List.of('Batman', 'Spiderman')
+          }),
+          entries: List(),
+          initialEntries: List.of('Batman', 'Superman', 'Spiderman')
+        }))
+      ).to.equal(
+        Map({
+          vote: Map({
+            round: 2,
+            pair: List.of('Batman', 'Superman')
+          }),
+          entries: List.of('Spiderman'),
+          initialEntries: List.of('Batman', 'Superman', 'Spiderman')
+        })
+      )
+    })
+  })
+
   describe('vote', () => {
     it('creates a tally for the voted entry', () => {
       const state = Map({
         round: 1,
         pair: List.of('Batman', 'Superman')
       })
-      const nextState = vote(state, 'Batman')
+      const nextState = vote(state, 'Batman', 'voter1')
       expect(nextState).to.equal(Map({
         round: 1,
         pair: List.of('Batman', 'Superman'),
         tally: Map({
           'Batman': 1
+        }),
+        votes: Map({
+          voter1: 'Batman'
         })
       }))
+    })
+
+    it('nullifies previous vote for the same voter', () => {
+      expect(vote(Map({
+        round: 1,
+        pair: List.of('Batman', 'Superman'),
+        tally: Map({
+          'Batman': 3,
+          'Superman': 2
+        }),
+        votes: Map({
+          voter1: 'Superman'
+        })
+      }), 'Batman', 'voter1')
+    ).to.equal(
+      Map({
+        round: 1,
+        pair: List.of('Batman', 'Superman'),
+        tally: Map({
+          'Batman': 4,
+          'Superman': 1
+        }),
+        votes: Map({
+          voter1: 'Batman'
+        })
+      })
+    )
     })
 
     it('adds to existing tally for the voted entry', () => {
@@ -29,13 +83,16 @@ describe('application logic', () => {
           'Superman': 2
         })
       })
-      const nextState = vote(state, 'Batman')
+      const nextState = vote(state, 'Batman', 'voter1')
       expect(nextState).to.equal(Map({
         round: 1,
         pair: List.of('Batman', 'Superman'),
         tally: Map({
           'Batman': 4,
           'Superman': 2
+        }),
+        votes: Map({
+          voter1: 'Batman'
         })
       }))
     })
@@ -143,7 +200,8 @@ describe('application logic', () => {
       const nextState = setEntries(state, entries)
 
       expect(nextState).to.equal(Map({
-        entries: List.of('Batman', 'Superman')
+        entries: List.of('Batman', 'Superman'),
+        initialEntries: List.of('Batman', 'Superman')
       }))
     })
   })

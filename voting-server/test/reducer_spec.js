@@ -10,7 +10,8 @@ describe('reducer', () => {
     const nextState = reducer(undefined, action)
 
     expect(nextState).to.equal(fromJS({
-      entries: ['Batman']
+      entries: ['Batman'],
+      initialEntries: ['Batman']
     }))
   })
 
@@ -18,14 +19,15 @@ describe('reducer', () => {
     const actions = [
       {type: 'SET_ENTRIES', entries: ['Batman', 'Superman']},
       {type: 'NEXT'},
-      {type: 'VOTE', entry: 'Batman'},
-      {type: 'VOTE', entry: 'Superman'},
-      {type: 'VOTE', entry: 'Batman'},
+      {type: 'VOTE', entry: 'Batman', clientId: 'voter1'},
+      {type: 'VOTE', entry: 'Superman', clientId: 'voter2'},
+      {type: 'VOTE', entry: 'Batman', clientId: 'voter3'},
       {type: 'NEXT'}
     ]
     const finalState = actions.reduce(reducer, Map())
     expect(finalState).to.equal(fromJS({
-      winner: 'Batman'
+      winner: 'Batman',
+      initialEntries: ['Batman', 'Superman']
     }))
   })
 
@@ -35,7 +37,8 @@ describe('reducer', () => {
     const nextState = reducer(initialState, action)
 
     expect(nextState).to.equal(fromJS({
-      entries: ['Batman']
+      entries: ['Batman'],
+      initialEntries: ['Batman']
     }))
   })
 
@@ -63,14 +66,17 @@ describe('reducer', () => {
       },
       entries: []
     })
-    const action = {type: 'VOTE', entry: 'Batman'}
+    const action = {type: 'VOTE', entry: 'Batman', clientId: 'voter1'}
     const nextState = reducer(initialState, action)
 
     expect(nextState).to.equal(fromJS({
       vote: {
         round: 1,
         pair: ['Batman', 'Superman'],
-        tally: { Batman: 1 }
+        tally: { Batman: 1 },
+        votes: {
+          voter1: 'Batman'
+        }
       },
       entries: []
     }))
