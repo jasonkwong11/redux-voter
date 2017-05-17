@@ -5,6 +5,19 @@ import reducer from '../src/reducer'
 
 describe('reducer', () => {
 
+  it('handles SET_CLIENT_ID', () => {
+    const initialState = Map()
+    const action = {
+      type: 'SET_CLIENT_ID',
+      clientId: '1234'
+    }
+
+    const nextState = reducer(initialState, action)
+    expect(nextState).to.equal(fromJS({
+      clientId: '1234'
+    }))
+  })
+
   it('removes myVote on SET_STATE if round changes', () => {
     const initialState = fromJS({
       vote: {
