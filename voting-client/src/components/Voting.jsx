@@ -1,11 +1,12 @@
 import React from 'react';
+import createReactClass from 'create-react-class'
 import PureRenderMixin from 'react-addons-pure-render-mixin';
 import {connect} from 'react-redux';
 import Winner from './Winner';
 import Vote from './Vote';
 import * as actionCreators from '../action_creators'
 
-export const Voting = React.createClass({
+export const Voting = createReactClass({
   mixins: [PureRenderMixin],
   render: function() {
     return <div>
