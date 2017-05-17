@@ -11,6 +11,18 @@ import {expect} from 'chai'
 
 describe('Results', () => {
 
+  it('invokes action callback when restart button is clicked', () => {
+    let restartInvoked = false
+    const pair = List.of('Trainspotting', '28 Days Later')
+    const component = renderIntoDocument(
+      <Results pair={pair}
+        tally={Map()}
+        restart={() => restartInvoked = true} />
+      );
+    Simulate.click(ReactDOM.findDOMNode(component.refs.restart))
+    expect(restartInvoked).to.equal(true)
+  })
+
   it('renders entries with vote counts or zero', () => {
     const pair = List.of('Trainspotting', '28 Days Later')
     const tally = Map({'Trainspotting': 5})

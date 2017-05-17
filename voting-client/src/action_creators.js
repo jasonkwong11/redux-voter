@@ -12,6 +12,13 @@ export function setClientId(clientId) {
   }
 }
 
+export function restart() {
+  return {
+    meta: {remote: true},
+    type: 'RESTART'
+  }
+}
+
 export function vote(entry) {
   return {
     meta: {remote: true},
