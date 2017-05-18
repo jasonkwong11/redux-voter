@@ -35,7 +35,6 @@ const Vote = createReactClass({
             <div className="label">Voted</div> :
           null}
         </button>
-
       )}
     </div>
   }
