@@ -19,12 +19,12 @@ export const Results = createReactClass({
   render: function() {
     return this.props.winner ?
     <Winner ref="winner" winner={this.props.winner} /> :
-    <div className="results">
+    <div className="results" style={{ textAlign: 'center' }}>
       <div className="tally">
         {this.getPair().map(entry =>
           <div key={entry} className="entry">
             <h1>{entry}</h1>
-            <div className="voteCount">
+            <div className="voteCount" style={{ fontSize: '50px' }}>
               {this.getVotes(entry)}
             </div>
           </div>

@@ -14,9 +14,19 @@ const Vote = createReactClass({
     return this.props.hasVoted === entry
   },
   render: function() {
-    return <div className="voting">
+    return <div className="voting" style={{ textAlign: 'center' }}>
       {this.getPair().map(entry =>
         <button
+          style={{
+            backgroundColor: 'lightblue',
+            border: 'none',
+            color: 'white',
+            padding: '5px',
+            margin: '15px',
+            display: 'inline-block',
+            textAlign: 'center',
+            fontSize: '24px'
+          }}
           key={entry}
           onClick={() => this.props.vote(entry)}
         >
@@ -25,6 +35,7 @@ const Vote = createReactClass({
             <div className="label">Voted</div> :
           null}
         </button>
+
       )}
     </div>
   }
