@@ -1,5 +1,5 @@
 ## Summary
-Redux Voter allows users to vote on a list of items to determine single winner. (See a demo)[https://youtu.be/5tgJagS4XmI]
+Redux Voter allows users to vote on a list of items to determine single winner. [See a video demo](https://youtu.be/5tgJagS4XmI)
 ### How?
 The first two items from the list are voted on each round by a simple two button interface. The item that gets more votes in that round is sent back to the end of the list. Then the next round begins.
 
